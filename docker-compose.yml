@@ -1,0 +1,29 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0.27
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./logs:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'my_database_root_password'
+      MYSQL_DATABASE: 'my_database_name'
+      MYSQL_USER: 'my_database_user'
+      MYSQL_PASSWORD: 'my_database_password'
+      TZ: 'Asia/Tokyo'
+    ports:
+      - "3306:3306"
+  node:
+    container_name: nest-app
+    build:
+      context: ./nest-app
+      dockerfile: Dockerfile
+    volumes:
+      - ./nest-app:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      - db
