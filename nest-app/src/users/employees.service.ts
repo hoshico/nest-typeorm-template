@@ -6,7 +6,7 @@ const MockEmployees: Employee[] = [
   {
     employeeNumber: '0501',
     name: 'ASL麻衣',
-    age: 25,
+    age: 24,
     imageUrl: '',
   },
   {
